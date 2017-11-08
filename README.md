@@ -1,6 +1,9 @@
 # wechat-cli
 微信 命令行版（简陋）
 
+- __不__ 支持 windows
+- 只支持 python3
+
 功能：
 
 - 和别人聊天
@@ -9,4 +12,6 @@
 
 依赖
 
-  pip install itchat
+```
+pip3 install itchat
+```

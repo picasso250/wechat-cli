@@ -68,7 +68,7 @@ while True:
     elif cmd == "ls" or cmd == "list": # list
         for u in recent:
             print(u,user_table[u])
-    elif cmd == 's' or cmd=="search": # search
+    elif cmd == 's' or cmd == "search": # search
         if len(args) > 0:
             k = args[0]
             ul = itchat.search_friends(name=k)
