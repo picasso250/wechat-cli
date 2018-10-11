@@ -91,7 +91,20 @@ while True:
             print("Usage: s name")
     elif cmd == "t" or cmd=="talk": # talk
         if len(args) > 0:
-            talking_to = args[0]
+
+            if talking_to in user_table:
+                talking_to = args[0]
+            else:
+                k = args[0]
+                ul = itchat.search_friends(name=k)
+                if len(ul)==0:
+                    print("no user")
+                else:
+                    u = ul[0]
+                talking_to = u['UserName']
+                user_table[talking_to] = get_name(u)
+                recent.add(talking_to)
+
             promot = "> "+user_table[talking_to]+" $ "
             recent.add(talking_to)
         else:
