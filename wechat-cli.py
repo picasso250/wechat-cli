@@ -101,12 +101,13 @@ while True:
                     print("no user")
                 else:
                     u = ul[0]
-                talking_to = u['UserName']
-                user_table[talking_to] = get_name(u)
-                recent.add(talking_to)
+                    talking_to = u['UserName']
+                    user_table[talking_to] = get_name(u)
+                    recent.add(talking_to)
 
-            promot = "> "+user_table[talking_to]+" $ "
-            recent.add(talking_to)
+            if talking_to != None:
+                promot = "> "+user_table[talking_to]+" $ "
+                recent.add(talking_to)
         else:
             print("Usage: t @id")
     elif cmd == "logout":
