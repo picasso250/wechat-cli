@@ -16,6 +16,11 @@
 pip3 install itchat
 ```
 
+**如果是Windows的cmd**
+
+    python -m pip install itchat
+    python -m pip install pyreadline
+
 ## 展示
 
     ➜  wechat-cli git:(master) ✗ python3 wechat-cli.py
@@ -77,8 +82,3 @@ pip3 install itchat
     > olly $ olly Text: 就是我们不是通过微信的聊天框喵
     我在cli里面olly Text: 为什么会是这个。。。界面
     跟你聊天的呀
-
-## Install on Windows
-
-    python -m pip install itchat
-    python -m pip install pyreadline
