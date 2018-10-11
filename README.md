@@ -1,8 +1,8 @@
 # wechat-cli
 微信 命令行版（简陋）
 
-- __不__ 支持 windows
 - 只支持 python3
+- 支持 Windows Cmd / Linux / cygwin / Mac
 
 ## 功能：
 
@@ -77,3 +77,8 @@ pip3 install itchat
     > olly $ olly Text: 就是我们不是通过微信的聊天框喵
     我在cli里面olly Text: 为什么会是这个。。。界面
     跟你聊天的呀
+
+## Install on Windows
+
+    python -m pip install itchat
+    python -m pip install pyreadline
