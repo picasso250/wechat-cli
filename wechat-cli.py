@@ -19,7 +19,7 @@ def get_name(info):
 def get_cmd_args(s):
     args = s.split(' ')
     cmd = args[0]
-    if len(args)>1:
+    if len(args)>=1:
         args.pop(0)
     return cmd, [ a.strip() for a in args if len(a.strip()) > 0 ]
 
@@ -35,7 +35,7 @@ def text_reply(msg):
         name = u['RemarkName']
     print(name, '%s: %s' % (msg['Type'], msg['Text']))
 
-itchat.auto_login(enableCmdQR=2)
+itchat.auto_login(enableCmdQR=2,hotReload=True)
 
 # 开启记录消息
 def run_itchat():
@@ -51,6 +51,8 @@ user_table[me['UserName']] = '@me'
 talking_to = None
 promot="$ "
 
+print("Type help to get help")
+
 # cmd loop
 while True:
     s = input(promot)
@@ -65,10 +67,10 @@ while True:
         print("s\tSearch User")
         print("t\tTalk to someone")
         print("logout\tLogOut")
-    elif cmd == "ls" or cmd == "list": # list
+    elif cmd == "ls" : # list
         for u in recent:
             print(u,user_table[u])
-    elif cmd == 's' or cmd == "search": # search
+    elif cmd == 's' : # search
         if len(args) > 0:
             k = args[0]
             ul = itchat.search_friends(name=k)
@@ -89,10 +91,10 @@ while True:
                 recent.add(UserName)
         else:
             print("Usage: s name")
-    elif cmd == "t" or cmd=="talk": # talk
+    elif cmd == "t": # talk
         if len(args) > 0:
 
-            if talking_to in user_table:
+            if args[0] in user_table:
                 talking_to = args[0]
             else:
                 k = args[0]
@@ -103,7 +105,6 @@ while True:
                     u = ul[0]
                     talking_to = u['UserName']
                     user_table[talking_to] = get_name(u)
-                    recent.add(talking_to)
 
             if talking_to != None:
                 promot = "> "+user_table[talking_to]+" $ "
