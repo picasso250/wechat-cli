@@ -34,7 +34,7 @@ def text_reply(msg):
     else:
         u = itchat.search_friends(userName=FromUserName)
         user_table[u['UserName']] = get_name(u)
-        name = u['RemarkName']
+        name = get_name(u)
     print(name, '%s: %s' % (msg['Type'], msg['Text']))
 
 class Search():
