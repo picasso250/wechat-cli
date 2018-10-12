@@ -73,6 +73,13 @@ while True:
     elif cmd == 's' : # search
         if len(args) > 0:
             k = args[0]
+            ul = itchat.search_chatrooms(name=k)
+            if len(ul)>0:
+                u=ul[0]
+                print("chat room found")
+                UserName = u['UserName']
+                user_table[UserName] = get_name(u)
+                recent.add(UserName)
             ul = itchat.search_friends(name=k)
             u = None
             # search at every possible
@@ -98,9 +105,16 @@ while True:
                 talking_to = args[0]
             else:
                 k = args[0]
+
+                ul = itchat.search_chatrooms(name=k)
+                if len(ul)>0:
+                    u=ul[0]
+                    talking_to = u['UserName']
+                    user_table[talking_to] = get_name(u)
+
                 ul = itchat.search_friends(name=k)
                 if len(ul)==0:
-                    print("no user")
+                    pass
                 else:
                     u = ul[0]
                     talking_to = u['UserName']
