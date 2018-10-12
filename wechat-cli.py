@@ -148,12 +148,12 @@ while True:
             if talking_to != None:
                 promot = "> "+user_table[talking_to]+" $ "
                 recent.add(talking_to)
-        elif cmd == "r": # reply
+        else:
+            print("Usage: t @id")
+    elif cmd == "r": # reply
             if last_talk != None:
                 talking_to = last_talk
                 promot = "> "+user_table[talking_to]+" $ "
-        else:
-            print("Usage: t @id")
     elif cmd == "logout":
         itchat.logout()
         sys.exit()
