@@ -4,6 +4,7 @@ import itchat, time
 import threading
 import readline
 import sys, os
+import copy
 from itchat.content import *
 
 # 最近交谈
@@ -36,6 +37,36 @@ def text_reply(msg):
         name = u['RemarkName']
     print(name, '%s: %s' % (msg['Type'], msg['Text']))
 
+class Search():
+    def __init__(self):
+        c = itchat.instanceList[-1]
+        self.updateLock = c.storageClass.updateLock
+        self.memberList = c.memberList
+        self.chatroomList = c.chatroomList
+    def search_friends_w(self, name):
+        with self.updateLock:
+            contact = []
+            for m in self.memberList:
+                if any([name in m.get(k) for k in ('RemarkName', 'NickName', 'Alias')]):
+                    contact.append(m)
+            return copy.deepcopy(contact)
+    def search_chatrooms_w(self, name):
+        with self.updateLock:
+            matchList = []
+            for m in self.chatroomList:
+                if name in m['NickName']:
+                    matchList.append(copy.deepcopy(m))
+            return matchList
+    def search_all(self, name):
+        contact = []
+        for c in list(name):
+            contact += self.search_friends_w(c)
+        for c in list(name):
+            contact += self.search_chatrooms_w(c)
+        d = {}
+        for c in contact:
+            d[c['UserName']] = c
+        return d
 
 if os.name == 'nt':
     enableCmdQR = 1
@@ -58,7 +89,7 @@ user_table[me['UserName']] = '@me'
 talking_to = None
 promot="$ "
 
-print("Type help to get help")
+print("Type 'help' to get help")
 
 # cmd loop
 while True:
@@ -80,29 +111,12 @@ while True:
     elif cmd == 's' : # search
         if len(args) > 0:
             k = args[0]
-            ul = itchat.search_chatrooms(name=k)
-            if len(ul)>0:
-                u=ul[0]
-                print("chat room found")
-                UserName = u['UserName']
-                user_table[UserName] = get_name(u)
-                recent.add(UserName)
-            ul = itchat.search_friends(name=k)
-            u = None
-            # search at every possible
-            if len(ul) == 0:
-                ul = itchat.search_friends(wechatAccount=k)
-                if len(ul)==0:
-                    print("no user")
-                else:
-                    u = ul[0]
-            else:
-                u = ul[0]
-            if u != None:
-                print (u)
-                UserName = u['UserName']
-                user_table[UserName] = get_name(u)
-                recent.add(UserName)
+
+            s = Search()
+            d = s.search_all(k)
+            for k,r in d.items():
+                print(r['UserName'], r['RemarkName'], r['NickName'], r['Alias'])
+                user_table[r['UserName']] = get_name(r)
         else:
             print("Usage: s name")
     elif cmd == "t": # talk
