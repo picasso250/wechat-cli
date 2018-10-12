@@ -1,6 +1,6 @@
 # coding=utf-8
 
-import itchat, time
+import itchat
 import threading
 import readline
 import sys, os
