@@ -11,6 +11,7 @@ from itchat.content import *
 recent = set()
 # UserName => NickName(RemarkName)
 user_table = dict()
+last_talk = None # 最后一个交谈的人
 
 def get_name(info):
     if len(info['RemarkName']) == 0:
@@ -27,7 +28,9 @@ def get_cmd_args(s):
 
 @itchat.msg_register([TEXT, MAP, CARD, NOTE, SHARING])
 def text_reply(msg):
+    global last_talk
     FromUserName = msg['FromUserName']
+    last_talk = FromUserName
     recent.add(FromUserName)
     if FromUserName in user_table:
         name = user_table[FromUserName]
@@ -104,6 +107,7 @@ while True:
         print("ls\tList recent users")
         print("s\tSearch User")
         print("t\tTalk to someone")
+        print("r\tChange to reply last message")
         print("logout\tLogOut")
     elif cmd == "ls" : # list
         for u in recent:
@@ -144,6 +148,10 @@ while True:
             if talking_to != None:
                 promot = "> "+user_table[talking_to]+" $ "
                 recent.add(talking_to)
+        elif cmd == "r": # reply
+            if last_talk != None:
+                talking_to = last_talk
+                promot = "> "+user_table[talking_to]+" $ "
         else:
             print("Usage: t @id")
     elif cmd == "logout":
