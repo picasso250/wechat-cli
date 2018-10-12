@@ -1,8 +1,9 @@
-#coding=utf8
+# coding=utf-8
+
 import itchat, time
 import threading
 import readline
-import sys
+import sys, os
 from itchat.content import *
 
 # 最近交谈
@@ -35,7 +36,13 @@ def text_reply(msg):
         name = u['RemarkName']
     print(name, '%s: %s' % (msg['Type'], msg['Text']))
 
-itchat.auto_login(enableCmdQR=2,hotReload=True)
+
+if os.name == 'nt':
+    enableCmdQR = 1
+else:
+    enableCmdQR = 2
+
+itchat.auto_login(enableCmdQR=enableCmdQR, hotReload=True)
 
 # 开启记录消息
 def run_itchat():

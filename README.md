@@ -1,8 +1,8 @@
 # wechat-cli
 微信 命令行版（简陋）
 
-- __不__ 支持 windows
 - 只支持 python3
+- 支持 Windows Cmd / Linux / cygwin / Mac
 
 ## 功能：
 
@@ -15,6 +15,11 @@
 ```
 pip3 install itchat
 ```
+
+**如果是Windows的cmd**
+
+    python -m pip install itchat
+    python -m pip install pyreadline
 
 ## 展示
 
