@@ -2,10 +2,15 @@
 
 import itchat
 import threading
-import readline
 import sys, os
 import copy
 from itchat.content import *
+
+if os.name == 'nt':
+    enableCmdQR = 1
+else:
+    enableCmdQR = 2
+    import readline # 强哥说，windows下面不需要
 
 # 最近交谈
 recent = set()
@@ -70,11 +75,6 @@ class Search():
         for c in contact:
             d[c['UserName']] = c
         return d
-
-if os.name == 'nt':
-    enableCmdQR = 1
-else:
-    enableCmdQR = 2
 
 itchat.auto_login(enableCmdQR=enableCmdQR, hotReload=True)
 
