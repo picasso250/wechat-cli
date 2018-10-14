@@ -76,7 +76,13 @@ class Search():
             d[c['UserName']] = c
         return d
 
-itchat.auto_login(enableCmdQR=enableCmdQR, hotReload=True)
+running = True
+def logout_callback():
+    global running
+    running = False
+    print("Logout\n")
+
+itchat.auto_login(enableCmdQR=enableCmdQR, hotReload=True, exitCallback=logout_callback)
 
 # 开启记录消息
 def run_itchat():
@@ -95,7 +101,7 @@ promot="$ "
 print("Type 'help' to get help")
 
 # cmd loop
-while True:
+while running:
     s = input(promot)
     s = s.strip()
     if s == "":
