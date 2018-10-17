@@ -31,7 +31,7 @@ def get_cmd_args(s):
         args.pop(0)
     return cmd, [ a.strip() for a in args if len(a.strip()) > 0 ]
 
-@itchat.msg_register([TEXT, MAP, CARD, NOTE, SHARING])
+@itchat.msg_register(TEXT, isGroupChat=True)
 def text_reply(msg):
     global last_talk
     FromUserName = msg['FromUserName']
@@ -40,7 +40,12 @@ def text_reply(msg):
     if FromUserName in user_table:
         name = user_table[FromUserName]
     else:
-        u = itchat.search_friends(userName=FromUserName)
+        uf = itchat.search_friends(userName=FromUserName)
+        ur = itchat.search_chatrooms(userName=FromUserName)
+        if uf == None: 
+            u = ur
+        else:
+            u = uf
         user_table[u['UserName']] = get_name(u)
         name = get_name(u)
     print(name, '%s: %s' % (msg['Type'], msg['Text']))
