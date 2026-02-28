@@ -39,7 +39,7 @@ def get_cmd_args(s):
 
 
 @itchat.msg_register(TEXT, isGroupChat=True)
-def text_reply(msg):
+def text_reply_group(msg):
     global last_talk
     FromUserName = msg["FromUserName"]
     last_talk = FromUserName
@@ -55,6 +55,24 @@ def text_reply(msg):
             u = uf
         user_table[u["UserName"]] = get_name(u)
         name = get_name(u)
+    print(name, "%s: %s" % (msg["Type"], msg["Text"]))
+
+
+@itchat.msg_register(TEXT, isGroupChat=False)
+def text_reply_private(msg):
+    global last_talk
+    FromUserName = msg["FromUserName"]
+    last_talk = FromUserName
+    recent.add(FromUserName)
+    if FromUserName in user_table:
+        name = user_table[FromUserName]
+    else:
+        uf = itchat.search_friends(userName=FromUserName)
+        if uf:
+            user_table[uf["UserName"]] = get_name(uf)
+            name = get_name(uf)
+        else:
+            name = "Unknown"
     print(name, "%s: %s" % (msg["Type"], msg["Text"]))
 
 
