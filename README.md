@@ -13,7 +13,7 @@
 ## 依赖
 
 ```
-pip3 install itchat
+python -m pip install itchat-on
 ```
 
 ## 展示
