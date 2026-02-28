@@ -16,6 +16,21 @@
 python -m pip install itchat-on
 ```
 
+## 使用
+
+```
+python wechat-cli.py              # 默认配置
+python wechat-cli.py -q 1         # 指定二维码列宽为1
+```
+
+### 命令帮助
+
+- `ls` - 列出最近联系人
+- `s` - 搜索好友
+- `t` - 与某人聊天
+- `r` - 回复最后一条消息
+- `logout` - 登出
+
 ## 展示
 
     ➜  wechat-cli git:(master) ✗ python3 wechat-cli.py
